@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { incrementLikes } from "@/app/actions/blog"
 import { getBlogById } from "@/app/services/blog"
 import { notFound } from "next/navigation"
@@ -30,3 +31,12 @@ export default async function BlogPage({
     </main>
   )
 }
+=======
+export default function BlogPage() {
+  return (
+    <div>
+      Blog Page
+    </div>
+  );
+}
+>>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec

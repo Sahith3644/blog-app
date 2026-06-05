@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Link from "next/link"
 import { getBlogs } from "@/app/services/blog"
 
@@ -38,3 +39,12 @@ export default async function BlogsPage({
     </main>
   )
 }
+=======
+export default function BlogPage() {
+  return (
+    <div>
+      Blog Page
+    </div>
+  );
+}
+>>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec
