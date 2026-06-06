@@ -1,19 +1,25 @@
-<<<<<<< HEAD
-export default function Home() {
+import Link from "next/link"
+import { getBlogs } from "@/app/services/blog"
+
+export default async function Home() {
+  const blogs = await getBlogs()
+
+  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
+
   return (
     <main>
-      <h1>Blog App</h1>
-      <p>Welcome to the blog application.</p>
+      <h2>Recent Blogs</h2>
+
+      <ul>
+        {sortedBlogs.map((blog) => (
+          <li key={blog.id}>
+            <Link href={`/blogs/${blog.id}`}>
+              {blog.title}
+            </Link>
+            {" "}by {blog.author} ({blog.likes} likes)
+          </li>
+        ))}
+      </ul>
     </main>
   )
 }
-=======
-const Home=()=>{
-  return(
-    <div>
-      <h1>BLOG APP</h1>
-    </div>
-  );
-};
-export default Home;
->>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec

@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "name": "blog-app",
-=======
-  "name": "notes-app",
->>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,12 +9,9 @@
     "lint": "eslint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@neondatabase/serverless": "^1.1.0",
     "drizzle-kit": "^0.31.10",
     "drizzle-orm": "^0.45.2",
-=======
->>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec
     "next": "16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -28,7 +21,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-<<<<<<< HEAD
     "dotenv": "^17.4.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
@@ -37,11 +29,3 @@
     "typescript": "^5"
   }
 }
-=======
-    "eslint": "^9",
-    "eslint-config-next": "16.2.7",
-    "tailwindcss": "^4",
-    "typescript": "^5"
-  }
-}
->>>>>>> 9b9b0a4f7e3f6c46311ffe592eaa5f06ebbf39ec

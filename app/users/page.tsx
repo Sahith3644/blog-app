@@ -6,12 +6,12 @@ export default async function UsersPage() {
 
   return (
     <main>
-      <h1>Users</h1>
+      <h2>Users</h2>
 
       <ul>
         {users.map((user) => (
           <li key={user.id}>
-            <Link href={`/users/${user.username}`}>{user.name}</Link>
+            <Link href={`/users/${user.username}`}>{user.username}</Link>
           </li>
         ))}
       </ul>
