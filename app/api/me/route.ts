@@ -12,8 +12,8 @@ export async function GET(request: Request) {
   const token = authorization.replace("Bearer ", "")
 
   const user = await db.query.users.findFirst({
-    where: eq(token),
-  })
+  where: eq(users.token, token),
+})
 
   if (!user) {
     return Response.json({ error: "invalid token" }, { status: 401 })
