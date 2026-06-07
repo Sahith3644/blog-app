@@ -1,21 +1,20 @@
 import Link from "next/link"
-import { getUserByUsername } from "@/app/services/users"
 import { notFound } from "next/navigation"
+import { getUserByUsername } from "@/app/services/users"
 
 export default async function UserPage({
   params,
 }: {
-  params: Promise<{ username: string }>
+  params: { username: string }
 }) {
-  const { username } = await params
-  const user = await getUserByUsername(username)
+  const user = await getUserByUsername(params.username)
 
   if (!user) {
     notFound()
   }
 
   return (
-    <main>
+    <div>
       <h1>{user.name}</h1>
       <p>Username: {user.username}</p>
 
@@ -28,6 +27,6 @@ export default async function UserPage({
           </li>
         ))}
       </ul>
-    </main>
+    </div>
   )
 }

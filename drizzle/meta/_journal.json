@@ -15,6 +15,20 @@
       "when": 1780732078121,
       "tag": "0001_talented_kid_colt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780772589917,
+      "tag": "0002_oval_clea",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780804808883,
+      "tag": "0003_redundant_texas_twister",
+      "breakpoints": true
     }
   ]
 }

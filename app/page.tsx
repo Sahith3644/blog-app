@@ -1,25 +1,9 @@
-import Link from "next/link"
-import { getBlogs } from "@/app/services/blog"
+import Homepage from "./homepage.mdx"
 
-export default async function Home() {
-  const blogs = await getBlogs()
-
-  const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
-
+export default function Home() {
   return (
-    <main>
-      <h2>Recent Blogs</h2>
-
-      <ul>
-        {sortedBlogs.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>
-              {blog.title}
-            </Link>
-            {" "}by {blog.author} ({blog.likes} likes)
-          </li>
-        ))}
-      </ul>
-    </main>
+    <div className="markdown">
+      <Homepage />
+    </div>
   )
 }
