@@ -7,42 +7,30 @@ export default function NavBar() {
   const { data: session } = useSession()
 
   return (
-    <nav className="mt-4 flex flex-wrap items-center justify-center gap-6 rounded-lg bg-blue-900 py-3 px-4">
-      <Link
-        href="/"
-        className="font-medium text-blue-100 transition hover:text-white"
-      >
-        Home
+    <nav className="mt-4 flex flex-wrap items-center justify-center gap-6 rounded-lg bg-blue-900 px-4 py-3">
+      <Link href="/" className="font-medium text-blue-100 hover:text-white">
+        home
       </Link>
 
-      <Link
-        href="/blogs"
-        className="font-medium text-blue-100 transition hover:text-white"
-      >
-        Blogs
+      <Link href="/blogs" className="font-medium text-blue-100 hover:text-white">
+        blogs
       </Link>
 
-      <Link
-        href="/users"
-        className="font-medium text-blue-100 transition hover:text-white"
-      >
-        Users
+      <Link href="/users" className="font-medium text-blue-100 hover:text-white">
+        users
       </Link>
 
-      <Link
-        href="/me"
-        className="font-medium text-blue-100 transition hover:text-white"
-      >
-        Me
+      <Link href="/me" className="font-medium text-blue-100 hover:text-white">
+        me
       </Link>
 
       {session ? (
         <>
           <Link
             href="/blogs/new"
-            className="font-medium text-blue-100 transition hover:text-white"
+            className="font-medium text-blue-100 hover:text-white"
           >
-            Create Blog
+            create new
           </Link>
 
           <span className="text-sm text-white">
@@ -51,25 +39,25 @@ export default function NavBar() {
 
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="rounded-md bg-blue-600 px-3 py-1 text-white transition hover:bg-blue-500"
+            className="rounded bg-blue-600 px-3 py-1 text-white hover:bg-blue-500"
           >
-            Logout
+            logout
           </button>
         </>
       ) : (
         <>
           <Link
             href="/login"
-            className="font-medium text-blue-100 transition hover:text-white"
+            className="font-medium text-blue-100 hover:text-white"
           >
-            Login
+            login
           </Link>
 
           <Link
             href="/register"
-            className="font-medium text-blue-100 transition hover:text-white"
+            className="font-medium text-blue-100 hover:text-white"
           >
-            Register
+            register
           </Link>
         </>
       )}

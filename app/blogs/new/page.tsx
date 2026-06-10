@@ -29,47 +29,63 @@ export default function NewBlogPage() {
   const [state, formAction] = useActionState(createBlog, initialState)
 
   return (
-    <div className="mx-auto max-w-md rounded border bg-white p-6 shadow-sm">
-      <h2 className="mb-6 text-center text-2xl font-bold">Create a new blog</h2>
+    <div className="mx-auto max-w-md rounded border bg-white p-6 shadow">
+      <h2 className="mb-6 text-2xl font-bold">Create a new blog</h2>
 
-      <form className="space-y-4" action={formAction}>
+      <form action={formAction} className="space-y-4">
         <div>
-          <input
-            className="w-full rounded border px-3 py-2"
-            name="title"
-            placeholder="Title"
-            defaultValue={state.values.title}
-          />
+          <label>
+            Title
+            <input
+              className="mt-1 w-full rounded border px-3 py-2"
+              name="title"
+              defaultValue={state.values.title}
+            />
+          </label>
           {state.errors.title && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
+            <p data-testid="title-error" className="text-red-600">
+              {state.errors.title}
+            </p>
           )}
         </div>
 
         <div>
-          <input
-            className="w-full rounded border px-3 py-2"
-            name="author"
-            placeholder="Author"
-            defaultValue={state.values.author}
-          />
+          <label>
+            Author
+            <input
+              className="mt-1 w-full rounded border px-3 py-2"
+              name="author"
+              defaultValue={state.values.author}
+            />
+          </label>
           {state.errors.author && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.author}</p>
+            <p data-testid="author-error" className="text-red-600">
+              {state.errors.author}
+            </p>
           )}
         </div>
 
         <div>
-          <input
-            className="w-full rounded border px-3 py-2"
-            name="url"
-            placeholder="URL"
-            defaultValue={state.values.url}
-          />
+          <label>
+            URL
+            <input
+              className="mt-1 w-full rounded border px-3 py-2"
+              name="url"
+              defaultValue={state.values.url}
+            />
+          </label>
           {state.errors.url && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.url}</p>
+            <p data-testid="url-error" className="text-red-600">
+              {state.errors.url}
+            </p>
           )}
         </div>
 
-        <button className="w-full rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+        <button
+          data-testid="create-blog-button"
+          type="submit"
+          className="rounded bg-blue-600 px-4 py-2 text-white"
+        >
           Create
         </button>
       </form>

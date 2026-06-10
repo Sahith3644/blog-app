@@ -3,8 +3,10 @@
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useNotification } from "@/app/components/NotificationContext"
 
 export default function LoginPage() {
+  const {showNotification}=useNotification()
   const router = useRouter()
   const [error, setError] = useState("")
 
@@ -20,49 +22,55 @@ export default function LoginPage() {
     })
 
     if (result?.error) {
-      router.push("/register")
-    } else {
-      router.push("/")
-      router.refresh()
-    }
-  };
-<h1 className="text-4xl text-red-600 font-bold">TEST COLOR</h1>
- return (
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      minHeight: "60vh",
-    }}
-  >
-    <div style={{ textAlign: "center", minWidth: "300px" }}>
-      <h2>Login</h2>
+      setError("Invalid username or password")
+    } else { showNotification("Login successful")
+router.push("/")
+router.refresh()
+  }}
 
-      {error && <p style={{ color: "red" }}>{error}</p>}
+  return (
+    <div className="mx-auto max-w-md rounded border bg-white p-6 shadow">
+      <h2 className="mb-4 text-2xl font-bold">Login</h2>
 
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            required
-          />
+      {error && (
+        <p data-testid="error-message" className="mb-4 text-red-600">
+          {error}
+        </p>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label>
+            Username
+            <input
+              className="mt-1 w-full rounded border px-3 py-2"
+              type="text"
+              name="username"
+              required
+            />
+          </label>
         </div>
 
-        <div style={{ marginBottom: "10px" }}>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            required
-          />
+        <div>
+          <label>
+            Password
+            <input
+              className="mt-1 w-full rounded border px-3 py-2"
+              type="password"
+              name="password"
+              required
+            />
+          </label>
         </div>
 
-        <button type="submit">Login</button>
+        <button
+          data-testid="login-button"
+          type="submit"
+          className="rounded bg-blue-600 px-4 py-2 text-white"
+        >
+          Login
+        </button>
       </form>
     </div>
-  </div>
-)
+  )
 }

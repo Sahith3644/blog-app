@@ -4,59 +4,67 @@ import { getBlogs } from "@/app/services/blog"
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ filter?: string }>
+  searchParams: Promise<{ filter?: string; created?: string }>
 }) {
-  const { filter } = await searchParams
+  const { filter, created } = await searchParams
+  {created === "true" && (
+  <div
+    data-testid="notification"
+    className="mb-4 rounded bg-green-100 px-4 py-3 text-green-700"
+  >
+    Blog created
+  </div>
+)}
   const blogs = await getBlogs()
 
   const filteredBlogs = filter
     ? blogs.filter((blog) =>
-        blog.title.toLowerCase().includes(filter.toLowerCase())
+        blog.title.toLowerCase().includes(filter.toLowerCase()),
       )
     : blogs
 
-  const sortedBlogs = filteredBlogs.sort((a, b) => b.likes - a.likes)
+  const sortedBlogs = [...filteredBlogs].sort((a, b) => b.likes - a.likes)
 
   return (
     <div>
-      <h2 className="mb-6 text-2xl font-bold">Blogs</h2>
+      <h2 className="mb-4 text-2xl font-bold">blogs</h2>
 
-      <form className="mb-6 flex gap-2">
-        <input
-          className="w-full rounded border px-3 py-2"
-          name="filter"
-          placeholder="Search by title"
-          defaultValue={filter || ""}
-        />
-        <button className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
-          Search
-        </button>
-      </form>
+      <form className="mb-6">
+  <label>
+    search
+    <input
+      data-testid="filter-input"
+      className="ml-2 rounded border px-2 py-1"
+      name="filter"
+      defaultValue={filter ?? ""}
+    />
+  </label>
+  <div
+  data-testid="notification"
+  className="mb-4 rounded bg-green-100 px-4 py-3 text-green-700"
+>
+  Blog created
+</div>
 
-      <div className="mb-6">
-        <Link
-          className="rounded bg-green-600 px-4 py-2 text-white hover:bg-green-700"
-          href="/blogs/new"
-        >
-          Create new blog
-        </Link>
-      </div>
+  <button
+    data-testid="search-button"
+    className="ml-2 rounded bg-blue-600 px-3 py-1 text-white"
+  >
+    search
+  </button>
+</form>
 
-      <ul className="space-y-3">
+      <div data-testid="blogs-list" className="space-y-3">
         {sortedBlogs.map((blog) => (
-          <li key={blog.id} className="rounded border bg-white p-4 shadow-sm">
-            <Link
-              className="text-lg font-semibold text-blue-700 hover:underline"
-              href={`/blogs/${blog.id}`}
-            >
+          <div key={blog.id} className="rounded border bg-white p-4 shadow">
+            <Link href={`/blogs/${blog.id}`} className="font-bold text-blue-700">
               {blog.title}
             </Link>
-            <p className="text-sm text-slate-600">
-              by {blog.author} • {blog.likes} likes
-            </p>
-          </li>
+            <p>{blog.author}</p>
+            <p>{blog.likes} likes</p>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   )
 }

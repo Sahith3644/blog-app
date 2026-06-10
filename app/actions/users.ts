@@ -5,6 +5,11 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db"
 import { users } from "@/db/schema"
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
+import { getCurrentUser } from "@/app/services/session"
+import { readingList } from "@/db/schema"
+import { randomUUID } from "crypto"
+
 
 type RegisterState = {
   errors: {
@@ -18,7 +23,39 @@ type RegisterState = {
     name: string
   }
 }
+export const generateToken = async () => {
+  const user = await getCurrentUser()
 
+  if (!user) {
+    redirect("/login")
+  }
+
+  const token = `${crypto.randomUUID()}-${Date.now()}-${Math.random()}`
+
+  await db
+    .update(users)
+    .set({ token })
+    .where(eq(users.id, user.id))
+
+  revalidatePath("/me")
+  redirect("/me")
+}
+export const markAsRead = async (formData: FormData) => {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
+  const id = Number(formData.get("id"))
+
+  await db
+    .update(readingList)
+    .set({ read: true })
+    .where(eq(readingList.id, id))
+
+  revalidatePath("/me")
+}
 export const registerUser = async (
   prevState: RegisterState,
   formData: FormData

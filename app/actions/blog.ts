@@ -4,6 +4,9 @@ import { auth } from "@/auth"
 import { addBlog, likeBlog } from "@/app/services/blog"
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
+import { db } from "@/db"
+import { readingList } from "@/db/schema"
+import { getCurrentUser } from "@/app/services/session"
 
 type BlogFormState = {
   errors: {
@@ -16,6 +19,24 @@ type BlogFormState = {
     author: string
     url: string
   }
+}
+export const addToReadingList = async (formData: FormData) => {
+  const user = await getCurrentUser()
+
+  if (!user) {
+    redirect("/login")
+  }
+
+  const blogId = Number(formData.get("blogId"))
+
+  await db.insert(readingList).values({
+    userId: user.id,
+    blogId,
+    read: false,
+  })
+
+  revalidatePath("/me")
+  revalidatePath(`/blogs/${blogId}`)
 }
 
 export const createBlog = async (
