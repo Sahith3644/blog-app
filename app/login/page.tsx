@@ -6,9 +6,9 @@ import { useState } from "react"
 import { useNotification } from "@/app/components/NotificationContext"
 
 export default function LoginPage() {
-  const {showNotification}=useNotification()
   const router = useRouter()
   const [error, setError] = useState("")
+  const { showNotification } = useNotification()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -23,10 +23,13 @@ export default function LoginPage() {
 
     if (result?.error) {
       setError("Invalid username or password")
-    } else { showNotification("Login successful")
-router.push("/")
-router.refresh()
-  }}
+      return
+    }
+
+    showNotification("Login successful")
+    router.push("/")
+    router.refresh()
+  }
 
   return (
     <div className="mx-auto max-w-md rounded border bg-white p-6 shadow">
