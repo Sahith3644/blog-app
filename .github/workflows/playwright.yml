@@ -11,6 +11,13 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      AUTH_URL: http://127.0.0.1:3000
+      NEXTAUTH_URL: http://127.0.0.1:3000
+      NODE_ENV: test
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,32 +35,23 @@ jobs:
 
       - name: Set up environment file
         run: |
-          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env.local
-          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
-          echo "AUTH_URL=http://localhost:3000" >> .env.local
-          echo "NEXTAUTH_URL=http://localhost:3000" >> .env.local
+          echo "DATABASE_URL=${DATABASE_URL}" > .env.local
+          echo "AUTH_SECRET=${AUTH_SECRET}" >> .env.local
+          echo "AUTH_URL=${AUTH_URL}" >> .env.local
+          echo "NEXTAUTH_URL=${NEXTAUTH_URL}" >> .env.local
           echo "NODE_ENV=test" >> .env.local
 
       - name: Verify environment setup
         run: |
-          echo "Checking .env.local file:"
+          echo "DATABASE_URL exists: ${{ secrets.DATABASE_URL != '' }}"
+          echo "AUTH_SECRET exists: ${{ secrets.AUTH_SECRET != '' }}"
           cat .env.local | sed 's/=.*/=***/'
-          echo ""
-          echo "DATABASE_URL secret exists: ${{ secrets.DATABASE_URL != '' }}"
-          echo "AUTH_SECRET secret exists: ${{ secrets.AUTH_SECRET != '' }}"
 
       - name: Run database migrations
         run: npx drizzle-kit push
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run Playwright tests
         run: npx playwright test
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          AUTH_URL: http://localhost:3000
-          NEXTAUTH_URL: http://localhost:3000
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
